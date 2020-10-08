@@ -23,7 +23,9 @@ export const LaunchText = ({ launches }) => {
       <Text style={styles.underlineTextStyle}>
         {launches === 1
           ? "There's one launch scheduled for today."
-          : `There are ${converter.toWords(launches)} launches scheduled for today.`}
+          : `There are ${converter.toWords(
+              launches,
+            )} launches scheduled for today.`}
       </Text>
     </View>
   );

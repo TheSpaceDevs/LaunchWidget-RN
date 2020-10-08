@@ -1,1 +1,1 @@
-export const LL_URL = 'https://lldev.thespacedevs.com';
+export const LL_URL = 'https://ll.thespacedevs.com';
