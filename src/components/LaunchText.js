@@ -1,0 +1,49 @@
+import React from 'react';
+import { Text, View, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
+import converter from 'number-to-words';
+
+export const LaunchText = ({ launches }) => {
+  if (launches === 0) {
+    return (
+      <View style={styles.container}>
+        {/* eslint-disable-next-line react-native/no-inline-styles */}
+        <Text style={{ ...styles.yesNoTextStyle, color: 'red' }}>NO.</Text>
+        <Text style={styles.underlineTextStyle}>
+          There are no launches scheduled for today.
+        </Text>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.container}>
+      {/* eslint-disable-next-line react-native/no-inline-styles */}
+      <Text style={{ ...styles.yesNoTextStyle, color: '#3fe31b' }}>YES.</Text>
+      <Text style={styles.underlineTextStyle}>
+        {launches === 1
+          ? "There's one launch scheduled for today."
+          : `There are ${converter.toWords(launches)} launches scheduled for today.`}
+      </Text>
+    </View>
+  );
+};
+
+LaunchText.propTypes = {
+  launches: PropTypes.number.isRequired,
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  yesNoTextStyle: {
+    fontSize: 35,
+    fontWeight: 'bold',
+  },
+  underlineTextStyle: {
+    fontWeight: 'bold',
+  },
+});
