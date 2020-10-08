@@ -15,7 +15,11 @@ export default function App() {
   }, []);
 
   if (launches === null) {
-    return <ActivityIndicator />;
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator color="black" size="large" />
+      </View>
+    );
   }
 
   return (

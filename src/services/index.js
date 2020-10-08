@@ -3,9 +3,14 @@ import axios from 'axios';
 import { LL_URL } from '../constants';
 
 const getUpcomingLaunches = async () => {
-  const response = await axios.get(`${LL_URL}/2.0.0/launch/upcoming`);
-
-  return response.data.results;
+  try {
+    const response = await axios.get(`${LL_URL}/2.0.0/launch/upcoming`, {
+      timeout: 5000,
+    });
+    return response.data.results;
+  } catch (e) {
+    alert('Error contacting the LL2 API');
+  }
 };
 
 const isToday = (someDate) => {
