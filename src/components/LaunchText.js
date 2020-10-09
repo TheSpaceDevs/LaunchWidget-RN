@@ -1,10 +1,12 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Linking } from 'react-native';
 import PropTypes from 'prop-types';
 import converter from 'number-to-words';
 
 export const LaunchText = ({ launches }) => {
-  if (launches === 0) {
+  let numberOfLaunches = launches.length;
+
+  if (numberOfLaunches === 0) {
     return (
       <View style={styles.container}>
         {/* eslint-disable-next-line react-native/no-inline-styles */}
@@ -20,11 +22,15 @@ export const LaunchText = ({ launches }) => {
     <View style={styles.container}>
       {/* eslint-disable-next-line react-native/no-inline-styles */}
       <Text style={{ ...styles.yesNoTextStyle, color: '#3fe31b' }}>YES.</Text>
-      <Text style={styles.underlineTextStyle}>
-        {launches === 1
+      <Text
+        style={styles.underlineTextStyle}
+        onPress={() =>
+          Linking.openURL('https://thespacedevs.com/networkusers')
+        }>
+        {numberOfLaunches === 1
           ? "There's one launch scheduled for today."
           : `There are ${converter.toWords(
-              launches,
+              numberOfLaunches,
             )} launches scheduled for today.`}
       </Text>
     </View>
@@ -32,7 +38,7 @@ export const LaunchText = ({ launches }) => {
 };
 
 LaunchText.propTypes = {
-  launches: PropTypes.number.isRequired,
+  launches: PropTypes.instanceOf(Array).isRequired,
 };
 
 const styles = StyleSheet.create({
