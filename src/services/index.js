@@ -14,8 +14,8 @@ const getUpcomingLaunches = async () => {
 };
 
 const isToday = (someDate) => {
-  const today = new Date('2020-10-15T00:00:00Z');
-  // const today = new Date();
+  // const today = new Date('2020-10-15T00:00:00Z');
+  const today = new Date();
   const launchWindow = new Date(someDate);
   return (
     launchWindow.getDate() === today.getDate() &&
@@ -26,9 +26,7 @@ const isToday = (someDate) => {
 
 export const launchesToday = async () => {
   const launches = await getUpcomingLaunches();
-  const result = launches.filter((launch) => {
+  return launches.filter((launch) => {
     return isToday(launch.window_start) === true;
   });
-
-  return result;
 };
