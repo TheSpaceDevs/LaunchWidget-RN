@@ -4,7 +4,6 @@ import { StatusBar } from 'expo-status-bar';
 import {
   useFonts,
   Roboto_900Black,
-  Roboto_100Thin,
   Roboto_400Regular,
 } from '@expo-google-fonts/roboto';
 
@@ -15,7 +14,6 @@ export default function App() {
   const [launches, setLaunches] = useState(null);
   let [fontsLoaded] = useFonts({
     Roboto_900Black,
-    Roboto_100Thin,
     Roboto_400Regular,
   });
 
@@ -35,7 +33,6 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <StatusBar style="auto" />
       <LaunchText launches={launches} />
     </View>
   );

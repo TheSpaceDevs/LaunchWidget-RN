@@ -52,6 +52,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   underlineTextStyle: {
-    fontWeight: 'bold',
+    fontFamily: 'Roboto_400Regular',
   },
 });
