@@ -1,9 +1,9 @@
 {
-  "name": "LaunchWidget-RN",
-  "displayName": "LaunchWidget-RN",
+  "name": "LaunchToday",
+  "displayName": "Launch Today",
   "expo": {
-    "name": "LaunchWidget-RN",
-    "slug": "LaunchWidget-RN",
+    "name": "LaunchToday",
+    "slug": "LaunchToday",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"

@@ -1,4 +1,4 @@
-package com.launchwidgetrn;
+package xyz.weijers.launchtoday;
 
 import android.os.Bundle;
 
