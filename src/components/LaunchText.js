@@ -28,7 +28,7 @@ export const LaunchText = ({ launches }) => {
           Linking.openURL('https://thespacedevs.com/networkusers')
         }>
         {numberOfLaunches === 1
-          ? "There's one launch scheduled for today."
+          ? 'There is one launch scheduled for today.'
           : `There are ${converter.toWords(
               numberOfLaunches,
             )} launches scheduled for today.`}
