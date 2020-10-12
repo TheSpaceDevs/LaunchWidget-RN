@@ -17,12 +17,11 @@ export default function App() {
     Roboto_400Regular,
   });
 
-  SplashScreen.preventAutoHideAsync();
-
   useEffect(() => {
     (async () => {
+      await SplashScreen.preventAutoHideAsync();
       setLaunches(await launchesToday());
-      SplashScreen.hideAsync();
+      await SplashScreen.hideAsync();
     })();
   }, []);
 
