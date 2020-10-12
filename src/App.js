@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, ActivityIndicator } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
+import * as SplashScreen from 'expo-splash-screen';
 import {
   useFonts,
   Roboto_900Black,
@@ -11,24 +11,23 @@ import { LaunchText } from './components';
 import { launchesToday } from './services';
 
 export default function App() {
-  const [launches, setLaunches] = useState(null);
+  const [launches, setLaunches] = useState([]);
   let [fontsLoaded] = useFonts({
     Roboto_900Black,
     Roboto_400Regular,
   });
 
+  SplashScreen.preventAutoHideAsync();
+
   useEffect(() => {
     (async () => {
       setLaunches(await launchesToday());
+      SplashScreen.hideAsync();
     })();
   }, []);
 
   if (!fontsLoaded || launches === null) {
-    return (
-      <View style={styles.container}>
-        <ActivityIndicator color="black" size="large" />
-      </View>
-    );
+    return null;
   }
 
   return (
