@@ -16,11 +16,16 @@ or alternatively using `brew install fastlane`
 
 # Available Actions
 ## Android
+### android dev
+```
+fastlane android dev
+```
+Build the Android application.
 ### android alpha
 ```
 fastlane android alpha
 ```
-Build the Android application.
+
 
 ----
 

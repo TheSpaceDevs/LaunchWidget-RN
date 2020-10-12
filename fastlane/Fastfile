@@ -1,9 +1,9 @@
 fastlane_version '2.53.1'
 
-#before_all do
-#  ensure_git_branch(branch: 'main')
-#  ensure_git_status_clean
-#end
+before_all do
+  ensure_git_branch(branch: 'main')
+  ensure_git_status_clean
+end
 
 
 platform :ios do
@@ -11,12 +11,13 @@ platform :ios do
 end
 
 platform :android do
-  desc 'Build the Android application.'
+  desc 'Build the Android application for local use.'
   lane :dev do
       gradle(task: 'clean', project_dir: 'android/')
       gradle(task: 'assemble', build_type: 'Release', project_dir: 'android/')
     end
 
+  desc 'Build the Android application for internal testing'
   lane :alpha do
     #increment_version_code(gradle_file_path: 'android/app/build.gradle')
     gradle(task: 'clean', project_dir: 'android/')
