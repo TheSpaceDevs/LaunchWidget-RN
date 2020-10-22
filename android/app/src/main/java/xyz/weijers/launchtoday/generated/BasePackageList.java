@@ -1,4 +1,4 @@
-package com.istherealaunchtoday.generated;
+package xyz.weijers.launchtoday.generated;
 
 import java.util.Arrays;
 import java.util.List;
