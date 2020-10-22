@@ -147,7 +147,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "xyz.weijers.launchtoday"
+        applicationId "com.istherealaunchtoday"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
