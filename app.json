@@ -1,9 +1,9 @@
 {
-  "name": "IsThereaLaunchToday",
-  "displayName": "Is There a Launch Today",
+  "name": "IsThereALaunchToday",
+  "displayName": "Is There A Launch Today",
   "expo": {
-    "name": "IsThereaLaunchToday",
-    "slug": "IsThereaLaunchToday",
+    "name": "IsThereALaunchToday",
+    "slug": "IsThereALaunchToday",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"

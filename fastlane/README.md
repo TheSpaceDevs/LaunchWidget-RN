@@ -20,12 +20,12 @@ or alternatively using `brew install fastlane`
 ```
 fastlane android dev
 ```
-Build the Android application.
+Build the Android application for local use.
 ### android alpha
 ```
 fastlane android alpha
 ```
-
+Build the Android application for internal testing
 
 ----
 

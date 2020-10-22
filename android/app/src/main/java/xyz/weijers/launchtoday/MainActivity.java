@@ -1,4 +1,4 @@
-package com.istherealaunchtoday;
+package xyz.weijers.launchtoday;
 
 import android.os.Bundle;
 
