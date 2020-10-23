@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { StyleSheet, View, ActivityIndicator } from 'react-native';
+import React, { useEffect, useContext } from 'react';
+import { StyleSheet, View } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import {
   useFonts,
