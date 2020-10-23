@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { StyleSheet, View, ActivityIndicator } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import {
@@ -9,8 +9,10 @@ import {
 
 import { LaunchText } from './components';
 import { launchesToday } from './services';
+import { StateContext } from './AppContext';
 
 export default function App() {
+  const state = useContext(StateContext);
   const [launches, setLaunches] = useState([]);
   let [fontsLoaded] = useFonts({
     Roboto_900Black,
