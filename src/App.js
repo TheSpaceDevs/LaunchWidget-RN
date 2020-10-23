@@ -13,7 +13,6 @@ import { StateContext } from './AppContext';
 
 export default function App() {
   const state = useContext(StateContext);
-  const [launches, setLaunches] = useState([]);
   let [fontsLoaded] = useFonts({
     Roboto_900Black,
     Roboto_400Regular,
@@ -22,18 +21,18 @@ export default function App() {
   useEffect(() => {
     (async () => {
       await SplashScreen.preventAutoHideAsync();
-      setLaunches(await launchesToday());
+      state.setLaunches(await launchesToday());
       await SplashScreen.hideAsync();
     })();
   }, []);
 
-  if (!fontsLoaded || launches === null) {
+  if (!fontsLoaded || state.launches === null) {
     return null;
   }
 
   return (
     <View style={styles.container}>
-      <LaunchText launches={launches} />
+      <LaunchText />
     </View>
   );
 }

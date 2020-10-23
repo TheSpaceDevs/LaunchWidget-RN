@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Text, View, StyleSheet, Linking } from 'react-native';
-import PropTypes from 'prop-types';
 import converter from 'number-to-words';
 
-export const LaunchText = ({ launches }) => {
-  let numberOfLaunches = launches.length;
+import { StateContext } from '../AppContext';
+
+export const LaunchText = () => {
+  const state = useContext(StateContext);
+  let numberOfLaunches = state.launches.length;
 
   if (numberOfLaunches === 0) {
     return (
@@ -35,10 +37,6 @@ export const LaunchText = ({ launches }) => {
       </Text>
     </View>
   );
-};
-
-LaunchText.propTypes = {
-  launches: PropTypes.instanceOf(Array).isRequired,
 };
 
 const styles = StyleSheet.create({

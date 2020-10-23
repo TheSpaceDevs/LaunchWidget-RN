@@ -3,7 +3,7 @@ import React, { createContext, useState } from 'react';
 export const StateContext = createContext();
 
 const AppContext = ({ children }) => {
-  const [launches, setLaunches] = useState([]);
+  const [launches, setLaunches] = useState(null);
 
   const state = {
     launches,
