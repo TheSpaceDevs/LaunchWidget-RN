@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, Linking } from 'react-native';
 import converter from 'number-to-words';
 
 import { StateContext } from '../AppContext';
+import { colors } from '../constants';
 
 export const LaunchText = () => {
   const state = useContext(StateContext);
@@ -13,7 +14,11 @@ export const LaunchText = () => {
       <View style={styles.container}>
         {/* eslint-disable-next-line react-native/no-inline-styles */}
         <Text style={{ ...styles.yesNoTextStyle, color: 'red' }}>NO.</Text>
-        <Text style={styles.underlineTextStyle}>
+        <Text
+          style={{
+            ...styles.underlineTextStyle,
+            color: state.darkMode ? colors.fontLight : colors.fontDark,
+          }}>
           There are no launches scheduled for today.
         </Text>
       </View>
@@ -25,7 +30,10 @@ export const LaunchText = () => {
       {/* eslint-disable-next-line react-native/no-inline-styles */}
       <Text style={{ ...styles.yesNoTextStyle, color: '#3fe31b' }}>YES.</Text>
       <Text
-        style={styles.underlineTextStyle}
+        style={{
+          ...styles.underlineTextStyle,
+          color: state.darkMode ? colors.fontLight : colors.fontDark,
+        }}
         onPress={() =>
           Linking.openURL('https://thespacedevs.com/networkusers')
         }>
