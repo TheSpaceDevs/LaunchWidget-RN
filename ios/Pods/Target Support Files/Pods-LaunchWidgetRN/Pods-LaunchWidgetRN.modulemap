@@ -1,0 +1,6 @@
+module Pods_LaunchWidgetRN {
+  umbrella header "Pods-LaunchWidgetRN-umbrella.h"
+
+  export *
+  module * { export * }
+}
