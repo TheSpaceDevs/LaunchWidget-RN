@@ -1,19 +1,28 @@
 import React, { createContext, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { lightTheme, darkTheme } from './constants';
+
 export const StateContext = createContext();
 
 const AppContext = ({ children }) => {
   const [launches, setLaunches] = useState(null);
   const [darkMode, setDarkMode] = useState(false);
+  const [theme, setTheme] = useState(lightTheme);
 
   const initialDarkMode = async (mode) => {
-    setDarkMode(JSON.parse(mode));
+    setDarkMode(mode);
   };
 
-  const changeDarkMode = async () => {
-    setDarkMode(!darkMode);
-    await AsyncStorage.setItem('@LW-darkMode', JSON.stringify(!darkMode));
+  const changeDarkMode = async (mode) => {
+    setDarkMode(mode);
+    await AsyncStorage.setItem('@LW-darkMode', JSON.stringify(mode));
+
+    if (mode) {
+      setTheme(darkTheme);
+    } else {
+      setTheme(lightTheme);
+    }
   };
 
   const state = {
@@ -24,6 +33,10 @@ const AppContext = ({ children }) => {
     darkMode,
     initialDarkMode,
     changeDarkMode,
+
+    // Theme stuff
+    theme,
+    setTheme,
   };
 
   return (

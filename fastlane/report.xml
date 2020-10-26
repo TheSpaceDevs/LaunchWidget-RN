@@ -5,37 +5,37 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="0: Verifying fastlane version" time="0.000477">
+      <testcase classname="fastlane.lanes" name="0: Verifying fastlane version" time="0.001028">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="1: ensure_git_branch" time="0.031026">
+      <testcase classname="fastlane.lanes" name="1: ensure_git_branch" time="0.045824">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="2: ensure_git_status_clean" time="0.018001">
+      <testcase classname="fastlane.lanes" name="2: ensure_git_status_clean" time="0.029987">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="3: increment_version_code" time="0.002418">
+      <testcase classname="fastlane.lanes" name="3: increment_version_code" time="0.004426">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="4: clean" time="19.735736">
+      <testcase classname="fastlane.lanes" name="4: clean" time="14.253606">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="5: assembleRelease" time="220.923899">
+      <testcase classname="fastlane.lanes" name="5: assembleRelease" time="180.369706">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="6: upload_to_play_store_internal_app_sharing" time="29.843768">
+      <testcase classname="fastlane.lanes" name="6: upload_to_play_store_internal_app_sharing" time="125.915163">
         
       </testcase>
     

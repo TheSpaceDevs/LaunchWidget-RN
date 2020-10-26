@@ -8,9 +8,12 @@ if (process.env.NODE_ENV === 'development') {
 
 export { LL_URL };
 
-export const colors = {
-  lightBg: '#ffffff',
-  darkBg: '#6e6e6e',
-  fontLight: '#ffffff',
-  fontDark: 'black',
+export const lightTheme = {
+  mainBg: '#FFFFFF',
+  fontColor: '#292b2c',
+};
+
+export const darkTheme = {
+  mainBg: '#121212',
+  fontColor: '#E2E2E2',
 };

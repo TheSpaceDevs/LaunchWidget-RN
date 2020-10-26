@@ -1,63 +1,70 @@
-import React, { useEffect, useContext } from 'react';
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import React, { useEffect, useContext, useState } from 'react';
+import { TouchableOpacity } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import {
   useFonts,
   Roboto_900Black,
-  Roboto_400Regular,
+  Roboto_100Thin,
 } from '@expo-google-fonts/roboto';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ThemeProvider } from 'styled-components';
 
-import { LaunchText } from './components';
+import { LaunchText, CenterContainer, CreditsText } from './components';
 import { launchesToday } from './services';
 import { StateContext } from './AppContext';
-import { colors } from './constants';
+import { lightTheme, darkTheme } from './constants';
 
 export default function App() {
+  const [theme, setTheme] = useState(lightTheme);
   const state = useContext(StateContext);
   let [fontsLoaded] = useFonts({
     Roboto_900Black,
-    Roboto_400Regular,
+    Roboto_100Thin,
   });
 
   useEffect(() => {
     (async () => {
       await SplashScreen.preventAutoHideAsync();
-      const darkMode = await AsyncStorage.getItem('@LW-darkMode');
-      if (darkMode) {
-        await state.initialDarkMode(darkMode);
-      }
       state.setLaunches(await launchesToday());
       await SplashScreen.hideAsync();
     })();
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      const darkMode = JSON.parse(await AsyncStorage.getItem('@LW-darkMode'));
+      if (darkMode) {
+        await state.changeDarkMode(darkMode);
+      } else {
+        // Primarily to catch the null value. This happens when darkMode isn't set (yet).
+        await state.changeDarkMode(darkMode);
+      }
+    })();
+  }, [state.darkMode]);
 
   if (!fontsLoaded || state.launches === null) {
     return null;
   }
 
   return (
-    <View
-      style={{
-        ...styles.container,
-        backgroundColor: state.darkMode ? colors.darkBg : colors.lightBg,
-      }}>
-      <TouchableOpacity
-        onPress={() => {
-          state.changeDarkMode();
-        }}>
-        <Icon style={{ marginTop: 5 }} name="theme-light-dark" size={30} />
-      </TouchableOpacity>
-      <LaunchText />
-    </View>
+    <ThemeProvider theme={state.theme}>
+      <CenterContainer>
+        <TouchableOpacity
+          onPress={async () => {
+            if (state.darkMode) {
+              await state.changeDarkMode(false);
+            } else {
+              await state.changeDarkMode(true);
+            }
+          }}>
+          <Icon style={{ marginTop: 5 }} name="theme-light-dark" size={30} />
+        </TouchableOpacity>
+        <LaunchText />
+        <CreditsText>
+          A project by @TheSpaceDevs and @GeoffdBarrett.
+        </CreditsText>
+      </CenterContainer>
+    </ThemeProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

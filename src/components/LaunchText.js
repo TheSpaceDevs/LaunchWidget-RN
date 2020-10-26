@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import { Text, View, StyleSheet, Linking } from 'react-native';
+import { Linking } from 'react-native';
 import converter from 'number-to-words';
 
 import { StateContext } from '../AppContext';
-import { colors } from '../constants';
+import { StatusText, SubtitleText, CenterContainer } from './StyledComponents';
 
 export const LaunchText = () => {
   const state = useContext(StateContext);
@@ -11,29 +11,19 @@ export const LaunchText = () => {
 
   if (numberOfLaunches === 0) {
     return (
-      <View style={styles.container}>
+      <CenterContainer>
         {/* eslint-disable-next-line react-native/no-inline-styles */}
-        <Text style={{ ...styles.yesNoTextStyle, color: 'red' }}>NO.</Text>
-        <Text
-          style={{
-            ...styles.underlineTextStyle,
-            color: state.darkMode ? colors.fontLight : colors.fontDark,
-          }}>
-          There are no launches scheduled for today.
-        </Text>
-      </View>
+        <StatusText style={{ color: 'red' }}>NO</StatusText>
+        <SubtitleText>There are no launches scheduled for today.</SubtitleText>
+      </CenterContainer>
     );
   }
 
   return (
-    <View style={styles.container}>
+    <CenterContainer>
       {/* eslint-disable-next-line react-native/no-inline-styles */}
-      <Text style={{ ...styles.yesNoTextStyle, color: '#3fe31b' }}>YES.</Text>
-      <Text
-        style={{
-          ...styles.underlineTextStyle,
-          color: state.darkMode ? colors.fontLight : colors.fontDark,
-        }}
+      <StatusText style={{ color: '#5cb85c' }}>YES</StatusText>
+      <SubtitleText
         onPress={() =>
           Linking.openURL('https://thespacedevs.com/networkusers')
         }>
@@ -42,22 +32,7 @@ export const LaunchText = () => {
           : `There are ${converter.toWords(
               numberOfLaunches,
             )} launches scheduled for today.`}
-      </Text>
-    </View>
+      </SubtitleText>
+    </CenterContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  yesNoTextStyle: {
-    fontSize: 35,
-    fontWeight: 'bold',
-  },
-  underlineTextStyle: {
-    fontFamily: 'Roboto_400Regular',
-  },
-});
