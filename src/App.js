@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { TouchableOpacity } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import {
@@ -13,10 +13,8 @@ import { ThemeProvider } from 'styled-components';
 import { LaunchText, CenterContainer, CreditsText } from './components';
 import { launchesToday } from './services';
 import { StateContext } from './AppContext';
-import { lightTheme, darkTheme } from './constants';
 
 export default function App() {
-  const [theme, setTheme] = useState(lightTheme);
   const state = useContext(StateContext);
   let [fontsLoaded] = useFonts({
     Roboto_900Black,
