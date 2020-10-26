@@ -1,9 +1,9 @@
 fastlane_version '2.53.1'
 
-before_all do
-  ensure_git_branch(branch: 'main')
-  ensure_git_status_clean
-end
+#before_all do
+#  ensure_git_branch(branch: 'main')
+#  ensure_git_status_clean
+#end
 
 
 platform :ios do
@@ -22,6 +22,6 @@ platform :android do
     # increment_version_code(gradle_file_path: 'android/app/build.gradle')
     gradle(task: 'clean', project_dir: 'android/')
     gradle(task: 'assemble', build_type: 'Release', project_dir: 'android/')
-    upload_to_app_store(package_name: 'xyz.weijers.launchtoday', json_key: '/Users/derkweijers/Nextcloud/Certs/Playstore/fastlane_deploy_key.json', apk: 'android/app/build/outputs/apk/release/app-release.apk', track: 'alpha')
+    upload_to_play_store(package_name: 'xyz.weijers.launchtoday', json_key: '/Users/derkweijers/Nextcloud/Certs/Playstore/fastlane_deploy_key.json', apk: 'android/app/build/outputs/apk/release/app-release.apk', track: 'alpha')
   end
 end
