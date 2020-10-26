@@ -34,9 +34,6 @@ export default function App() {
       const darkMode = JSON.parse(await AsyncStorage.getItem('@LW-darkMode'));
       if (darkMode) {
         await state.changeDarkMode(darkMode);
-      } else {
-        // Primarily to catch the null value. This happens when darkMode isn't set (yet).
-        await state.changeDarkMode(darkMode);
       }
     })();
   }, [state.darkMode]);
