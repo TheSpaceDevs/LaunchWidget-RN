@@ -1,12 +1,11 @@
 import React, { useEffect, useContext } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { Switch } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import {
   useFonts,
   Roboto_900Black,
   Roboto_100Thin,
 } from '@expo-google-fonts/roboto';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ThemeProvider } from 'styled-components';
 
@@ -45,16 +44,13 @@ export default function App() {
   return (
     <ThemeProvider theme={state.theme}>
       <CenterContainer>
-        <TouchableOpacity
-          onPress={async () => {
-            if (state.darkMode) {
-              await state.changeDarkMode(false);
-            } else {
-              await state.changeDarkMode(true);
-            }
-          }}>
-          <Icon style={{ marginTop: 5 }} name="theme-light-dark" size={30} />
-        </TouchableOpacity>
+        <Switch
+          style={{ alignSelf: 'flex-end' }}
+          value={state.darkMode}
+          onValueChange={async (value) => {
+            await state.changeDarkMode(value);
+          }}
+        />
         <LaunchText />
         <CreditsText>
           A project by @TheSpaceDevs and @GeoffdBarrett.
