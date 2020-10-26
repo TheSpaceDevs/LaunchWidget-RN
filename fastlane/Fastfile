@@ -19,9 +19,9 @@ platform :android do
 
   desc 'Build the Android application for internal testing'
   lane :alpha do
-    increment_version_code(gradle_file_path: 'android/app/build.gradle')
+    # increment_version_code(gradle_file_path: 'android/app/build.gradle')
     gradle(task: 'clean', project_dir: 'android/')
     gradle(task: 'assemble', build_type: 'Release', project_dir: 'android/')
-    upload_to_play_store_internal_app_sharing(package_name: 'xyz.weijers.launchtoday', json_key: '/Users/derkweijers/Nextcloud/Certs/Playstore/fastlane_deploy_key.json', apk: 'android/app/build/outputs/apk/release/app-release.apk')
+    upload_to_app_store(package_name: 'xyz.weijers.launchtoday', json_key: '/Users/derkweijers/Nextcloud/Certs/Playstore/fastlane_deploy_key.json', apk: 'android/app/build/outputs/apk/release/app-release.apk', track: 'alpha')
   end
 end
