@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { Switch } from 'react-native';
+import { Switch, Linking } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import {
   useFonts,
@@ -9,7 +9,12 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ThemeProvider } from 'styled-components';
 
-import { LaunchText, CenterContainer, CreditsText } from './components';
+import {
+  LaunchText,
+  CenterContainer,
+  CreditsText,
+  LinkText,
+} from './components';
 import { launchesToday } from './services';
 import { StateContext } from './AppContext';
 
@@ -53,7 +58,16 @@ export default function App() {
         />
         <LaunchText />
         <CreditsText>
-          A project by @TheSpaceDevs and @GeoffdBarrett.
+          A project by{' '}
+          <LinkText
+            onPress={() => Linking.openURL('https://thespacedevs.com/')}>
+            @TheSpaceDevs
+          </LinkText>{' '}
+          and{' '}
+          <LinkText onPress={() => Linking.openURL('https://gdbarrett.com/')}>
+            @GeoffdBarrett
+          </LinkText>
+          .
         </CreditsText>
       </CenterContainer>
     </ThemeProvider>

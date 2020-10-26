@@ -23,3 +23,7 @@ export const CreditsText = styled.Text`
   color: ${(props) => props.theme.fontColor}
   margin-bottom: 15px;
 `;
+
+export const LinkText = styled.Text`
+  color: #0275d8;
+`;
