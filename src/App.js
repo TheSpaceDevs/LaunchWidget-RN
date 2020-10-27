@@ -14,6 +14,7 @@ import {
   CenterContainer,
   CreditsText,
   LinkText,
+  ThemedStatusBar,
 } from './components';
 import { launchesToday } from './services';
 import { StateContext } from './AppContext';
@@ -35,22 +36,24 @@ export default function App() {
 
   useEffect(() => {
     (async () => {
-      // Detecting device mode and set accordingly
-      let deviceMode = Appearance.getColorScheme();
-      if (deviceMode === 'dark') {
-        await state.changeDarkMode(true);
-      } else {
-        await state.changeDarkMode(false);
-      }
-
       // Get user preferred mode if this was set
       const manualMode = JSON.parse(
         await AsyncStorage.getItem('@LW-manualMode'),
       );
+
+      // Set the manually preferred dark mode setting
       if (manualMode) {
         const darkMode = JSON.parse(await AsyncStorage.getItem('@LW-darkMode'));
         if (darkMode) {
           await state.changeDarkMode(darkMode);
+        }
+      } else {
+        // Detecting device mode and set accordingly
+        let deviceMode = Appearance.getColorScheme();
+        if (deviceMode === 'dark') {
+          await state.changeDarkMode(true);
+        } else {
+          await state.changeDarkMode(false);
         }
       }
     })();
@@ -62,6 +65,7 @@ export default function App() {
 
   return (
     <ThemeProvider theme={state.theme}>
+      <ThemedStatusBar />
       <CenterContainer>
         <Switch
           style={{ alignSelf: 'flex-end' }}
