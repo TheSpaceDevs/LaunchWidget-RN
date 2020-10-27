@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { Switch, Linking } from 'react-native';
+import { Switch, Linking, Appearance } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import {
   useFonts,
@@ -35,9 +35,23 @@ export default function App() {
 
   useEffect(() => {
     (async () => {
-      const darkMode = JSON.parse(await AsyncStorage.getItem('@LW-darkMode'));
-      if (darkMode) {
-        await state.changeDarkMode(darkMode);
+      // Detecting device mode and set accordingly
+      let deviceMode = Appearance.getColorScheme();
+      if (deviceMode === 'dark') {
+        await state.changeDarkMode(true);
+      } else {
+        await state.changeDarkMode(false);
+      }
+
+      // Get user preferred mode if this was set
+      const manualMode = JSON.parse(
+        await AsyncStorage.getItem('@LW-manualMode'),
+      );
+      if (manualMode) {
+        const darkMode = JSON.parse(await AsyncStorage.getItem('@LW-darkMode'));
+        if (darkMode) {
+          await state.changeDarkMode(darkMode);
+        }
       }
     })();
   }, [state.darkMode]);
@@ -53,6 +67,7 @@ export default function App() {
           style={{ alignSelf: 'flex-end' }}
           value={state.darkMode}
           onValueChange={async (value) => {
+            await AsyncStorage.setItem('@LW-manualMode', JSON.stringify(true));
             await state.changeDarkMode(value);
           }}
         />
