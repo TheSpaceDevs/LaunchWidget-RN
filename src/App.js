@@ -15,6 +15,7 @@ import {
   CreditsText,
   LinkText,
   ThemedStatusBar,
+  ThemedNavigationBar,
 } from './components';
 import { launchesToday } from './services';
 import { StateContext } from './AppContext';
@@ -89,6 +90,7 @@ export default function App() {
           .
         </CreditsText>
       </CenterContainer>
+      <ThemedNavigationBar />
     </ThemeProvider>
   );
 }
