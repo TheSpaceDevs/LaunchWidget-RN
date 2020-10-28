@@ -69,7 +69,7 @@ export default function App() {
       <ThemedStatusBar />
       <CenterContainer>
         <Switch
-          style={{ alignSelf: 'flex-end' }}
+          style={{ alignSelf: 'flex-end', margin: 5 }}
           value={state.darkMode}
           onValueChange={async (value) => {
             await AsyncStorage.setItem('@LW-manualMode', JSON.stringify(true));
