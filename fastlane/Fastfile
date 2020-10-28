@@ -24,5 +24,7 @@ platform :android do
     gradle(task: 'clean', project_dir: 'android/')
     gradle(task: 'assemble', build_type: 'Release', project_dir: 'android/')
     upload_to_play_store(package_name: 'xyz.weijers.launchtoday', json_key: '/Users/derkweijers/Nextcloud/Certs/Playstore/fastlane_deploy_key.json', apk: 'android/app/build/outputs/apk/release/app-release.apk', track: 'alpha')
+    git_commit(path: "./android/app/build.gradle", message: "Version Bump")
+    push_to_git_remote()
   end
 end
