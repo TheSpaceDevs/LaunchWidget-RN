@@ -1,8 +1,21 @@
+import React from 'react';
 import { registerRootComponent } from 'expo';
+import * as Sentry from '@sentry/react-native';
 
-import Main from './src/Main';
+import AppContext from './src/AppContext';
+import App from './src/App';
 
-// registerRootComponent calls AppRegistry.registerComponent('main', () => App);
-// It also ensures that whether you load the app in the Expo client or in a native build,
-// the environment is set up appropriately
-registerRootComponent(Main);
+// Over-engineer this app with Sentry
+Sentry.init({
+  dsn:
+    'https://f9569860f6d34873bee6d5222f4c665e@o167118.ingest.sentry.io/5494832',
+});
+
+// Setting-up the root of the application. We wrap the App component in the AppContext, giving us app-level state.
+registerRootComponent(() => {
+  return (
+    <AppContext>
+      <App />
+    </AppContext>
+  );
+});
