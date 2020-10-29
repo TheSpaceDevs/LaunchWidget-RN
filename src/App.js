@@ -34,7 +34,6 @@ export default function App() {
       state.setLaunches(await launchesToday());
       await SplashScreen.hideAsync();
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -60,7 +59,6 @@ export default function App() {
         }
       }
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.darkMode]);
 
   if (!fontsLoaded || state.launches === null) {
