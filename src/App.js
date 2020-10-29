@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { Switch, Linking, Appearance } from 'react-native';
+import { Linking, Appearance } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import {
   useFonts,
@@ -16,6 +16,7 @@ import {
   LinkText,
   ThemedStatusBar,
   ThemedNavigationBar,
+  DarkModeSwitch,
 } from './components';
 import { launchesToday } from './services';
 import { StateContext } from './AppContext';
@@ -33,6 +34,7 @@ export default function App() {
       state.setLaunches(await launchesToday());
       await SplashScreen.hideAsync();
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -58,6 +60,7 @@ export default function App() {
         }
       }
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.darkMode]);
 
   if (!fontsLoaded || state.launches === null) {
@@ -68,8 +71,7 @@ export default function App() {
     <ThemeProvider theme={state.theme}>
       <ThemedStatusBar />
       <CenterContainer>
-        <Switch
-          style={{ alignSelf: 'flex-end', margin: 5 }}
+        <DarkModeSwitch
           value={state.darkMode}
           onValueChange={async (value) => {
             await AsyncStorage.setItem('@LW-manualMode', JSON.stringify(true));

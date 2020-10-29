@@ -27,3 +27,8 @@ export const CreditsText = styled.Text`
 export const LinkText = styled.Text`
   color: #0275d8;
 `;
+
+export const DarkModeSwitch = styled.Switch`
+  align-self: flex-end;
+  margin: 8px;
+`;
