@@ -1,25 +1,9 @@
 fastlane_version '2.53.1'
 
-#before_all do
-  ensure_git_branch(branch: 'main')
-  # Don't need this now
-  # ensure_git_status_clean
-#end
-
-
-platform :ios do
-   # iOS Lanes
-end
-
 platform :android do
-  desc 'Build the Android application for local use.'
-  lane :dev do
-      gradle(task: 'clean', project_dir: 'android/')
-      gradle(task: 'assemble', build_type: 'Release', project_dir: 'android/')
-    end
-
    desc 'Build the Android application for internal testing'
    lane :internal do
+     ensure_git_branch(branch: 'development')
      increment_version_code(gradle_file_path: 'android/app/build.gradle')
      gradle(task: 'clean', project_dir: 'android/')
      gradle(task: 'assemble', build_type: 'Release', project_dir: 'android/')
@@ -28,7 +12,7 @@ platform :android do
      push_to_git_remote()
    end
 
-  # Normally I'll promote through the store, but this is here just in case
+  # Normally we'll promote through the store, but this is here just in case
   desc 'Build the Android application for alpha testing'
   lane :alpha do
     # This should happen when building the internal version
