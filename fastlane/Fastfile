@@ -18,13 +18,23 @@ platform :android do
       gradle(task: 'assemble', build_type: 'Release', project_dir: 'android/')
     end
 
-  desc 'Build the Android application for internal testing'
+   desc 'Build the Android application for internal testing'
+   lane :internal do
+     increment_version_code(gradle_file_path: 'android/app/build.gradle')
+     gradle(task: 'clean', project_dir: 'android/')
+     gradle(task: 'assemble', build_type: 'Release', project_dir: 'android/')
+     upload_to_play_store(package_name: 'xyz.weijers.launchtoday', json_key: '/Users/derkweijers/Nextcloud/Certs/Playstore/fastlane_deploy_key.json', apk: 'android/app/build/outputs/apk/release/app-release.apk', track: 'internal')
+     git_commit(path: "./android/app/build.gradle", message: "Version Bump")
+     push_to_git_remote()
+   end
+
+  # Normally I'll promote through the store, but this is here just in case
+  desc 'Build the Android application for alpha testing'
   lane :alpha do
-    increment_version_code(gradle_file_path: 'android/app/build.gradle')
-    gradle(task: 'clean', project_dir: 'android/')
-    gradle(task: 'assemble', build_type: 'Release', project_dir: 'android/')
+    # This should happen when building the internal version
+    # increment_version_code(gradle_file_path: 'android/app/build.gradle')
+    # gradle(task: 'clean', project_dir: 'android/')
+    # gradle(task: 'assemble', build_type: 'Release', project_dir: 'android/')
     upload_to_play_store(package_name: 'xyz.weijers.launchtoday', json_key: '/Users/derkweijers/Nextcloud/Certs/Playstore/fastlane_deploy_key.json', apk: 'android/app/build/outputs/apk/release/app-release.apk', track: 'alpha')
-    git_commit(path: "./android/app/build.gradle", message: "Version Bump")
-    push_to_git_remote()
   end
 end
