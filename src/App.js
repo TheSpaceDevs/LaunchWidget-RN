@@ -39,12 +39,12 @@ export default function App() {
 
   useEffect(() => {
     (async () => {
-      // Get user preferred mode if this was set
+      // Check if user manually set the dark mode option
       const manualMode = JSON.parse(
         await AsyncStorage.getItem('@LW-manualMode'),
       );
 
-      // Set the manually preferred dark mode setting
+      // Set the preferred dark mode setting
       if (manualMode) {
         const darkMode = JSON.parse(await AsyncStorage.getItem('@LW-darkMode'));
         if (darkMode) {
