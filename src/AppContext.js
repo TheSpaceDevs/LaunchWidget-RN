@@ -6,7 +6,8 @@ import { lightTheme, darkTheme } from './constants';
 export const StateContext = createContext();
 
 const AppContext = ({ children }) => {
-  const [launches, setLaunches] = useState(null);
+  const [launchesToday, setLaunchesToday] = useState(null);
+  const [launchesTomorrow, setLaunchesTomorrow] = useState(null);
   const [darkMode, setDarkMode] = useState(false);
   const [theme, setTheme] = useState(lightTheme);
 
@@ -26,8 +27,12 @@ const AppContext = ({ children }) => {
   };
 
   const state = {
-    launches,
-    setLaunches,
+    // Launches
+    launchesToday,
+    setLaunchesToday,
+
+    launchesTomorrow,
+    setLaunchesTomorrow,
 
     // Dark Mode
     darkMode,

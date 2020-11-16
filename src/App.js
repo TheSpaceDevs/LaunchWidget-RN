@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { Linking, Appearance } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import {
@@ -18,25 +18,30 @@ import {
   ThemedNavigationBar,
   DarkModeSwitch,
 } from './components';
-import { launchesToday } from './services';
+import { launchesToday, launchesTomorrow } from './services';
 import { StateContext } from './AppContext';
 
 export default function App() {
+  const [launchesLoaded, setLaunchesLoaded] = useState(false);
   const state = useContext(StateContext);
   let [fontsLoaded] = useFonts({
     Roboto_900Black,
     Roboto_100Thin,
   });
 
+  // Load the launches into memory, while showing the splashscreen
   useEffect(() => {
     (async () => {
       await SplashScreen.preventAutoHideAsync();
-      state.setLaunches(await launchesToday());
+      state.setLaunchesToday(await launchesToday());
+      state.setLaunchesTomorrow(await launchesTomorrow());
+      setLaunchesLoaded(true);
       await SplashScreen.hideAsync();
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Determine the dark mode state
   useEffect(() => {
     (async () => {
       // Check if user manually set the dark mode option
@@ -63,10 +68,13 @@ export default function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.darkMode]);
 
-  if (!fontsLoaded || state.launches === null) {
+  // If loading of the assets is not completed yet, we don't want to return anything
+  // Users see the splashscreen anyway
+  if (!fontsLoaded || !launchesLoaded) {
     return null;
   }
 
+  // Finally, if everything is set-up, we return the app components
   return (
     <ThemeProvider theme={state.theme}>
       <ThemedStatusBar />
