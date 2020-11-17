@@ -1,52 +1,26 @@
 import React, { useContext } from 'react';
 import { Text } from 'react-native';
 
-import { SubtitleText } from './StyledComponents';
+import { LinkText, SubtitleText } from './StyledComponents';
 import { StateContext } from '../AppContext';
-import SingleLaunch from './SingleLaunch';
-import MultiLaunch from './MultiLaunch';
 
 export default () => {
   const state = useContext(StateContext);
-  let numberOfLaunchesTomorrow = state.launchesTomorrow.length;
   let numberOfLaunchesToday = state.launchesToday.length;
 
-  const breakText = () => {
-    if (
-      (numberOfLaunchesToday === 0 && numberOfLaunchesTomorrow === 0) ||
-      (numberOfLaunchesToday === 1 && numberOfLaunchesTomorrow === 0) ||
-      (numberOfLaunchesToday === 1 && numberOfLaunchesTomorrow === 1)
-    ) {
-      return 'also';
-    }
-
-    if (numberOfLaunchesToday === 0 && numberOfLaunchesTomorrow === 1) {
-      return 'however';
-    }
-  };
-
-  if (numberOfLaunchesTomorrow === 0) {
-    return (
-      <>
-        <Text>{breakText()}</Text>
-        <SubtitleText>
-          There are no launches scheduled for tomorrow.
-        </SubtitleText>
-      </>
-    );
+  // If we have a launch today, do not show the next launch
+  if (numberOfLaunchesToday !== 0) {
+    return null;
   }
 
   return (
     <>
-      <Text>{breakText()}</Text>
-      {numberOfLaunchesTomorrow === 1 ? (
-        <SingleLaunch tomorrow={true} />
-      ) : (
-        <MultiLaunch
-          tomorrow={true}
-          numberOfLaunches={numberOfLaunchesTomorrow}
-        />
-      )}
+      <Text>Next</Text>
+      <SubtitleText>
+        <SubtitleText>The </SubtitleText>
+        <LinkText>next launch</LinkText>
+        <SubtitleText> is in 43 hours</SubtitleText>
+      </SubtitleText>
     </>
   );
 };

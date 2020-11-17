@@ -4,16 +4,14 @@ import converter from 'number-to-words';
 
 import { LinkText, SubtitleText } from './StyledComponents';
 
-const MultiLaunch = ({ numberOfLaunches, tomorrow }) => {
+const MultiLaunch = ({ numberOfLaunches }) => {
   return (
     <SubtitleText>
       <SubtitleText>There are </SubtitleText>
       <LinkText onPress={() => Linking.openURL('https://thespacedevs.com/')}>
         {converter.toWords(numberOfLaunches)}{' '}
       </LinkText>
-      <SubtitleText>
-        launches scheduled for {tomorrow ? 'tomorrow' : 'today'}.
-      </SubtitleText>
+      <SubtitleText>launches scheduled for today.</SubtitleText>
     </SubtitleText>
   );
 };

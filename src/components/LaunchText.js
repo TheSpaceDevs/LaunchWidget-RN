@@ -1,4 +1,5 @@
 import React from 'react';
+import { View } from 'react-native';
 
 import { CenterContainer } from './StyledComponents';
 import LaunchToday from './LaunchToday';
