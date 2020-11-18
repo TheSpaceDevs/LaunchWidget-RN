@@ -34,7 +34,6 @@ export default () => {
 
 const styles = StyleSheet.create({
   subtitleContainer: {
-    position: 'absolute',
-    top: 370,
+    marginTop: 50,
   },
 });
