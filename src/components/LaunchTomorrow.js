@@ -25,7 +25,7 @@ export default () => {
         </LinkText>
         <SubtitleText>
           {' '}
-          is {remainingDays === 1 ? 'tomorrow' : `in ${remainingDays} days`}
+          is {remainingDays === 1 ? 'tomorrow.' : `in ${remainingDays} days.`}
         </SubtitleText>
       </SubtitleText>
     </>
