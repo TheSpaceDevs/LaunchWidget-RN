@@ -18,7 +18,7 @@ import {
   ThemedNavigationBar,
   DarkModeSwitch,
 } from './components';
-import { launchesToday, launchesTomorrow } from './services';
+import { launchesToday, launches } from './services';
 import { StateContext } from './AppContext';
 
 export default function App() {
@@ -34,7 +34,7 @@ export default function App() {
     (async () => {
       await SplashScreen.preventAutoHideAsync();
       state.setLaunchesToday(await launchesToday());
-      state.setLaunchesTomorrow(await launchesTomorrow());
+      state.setLaunches(await launches());
       setLaunchesLoaded(true);
       await SplashScreen.hideAsync();
     })();

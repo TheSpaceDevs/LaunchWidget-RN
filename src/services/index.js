@@ -8,13 +8,16 @@ const today = new Date();
 
 const getUpcomingLaunches = async () => {
   try {
-    const response = await axios.get(`${LL_URL}/2.1.0/launch/upcoming`, {
-      timeout: 5000,
-      headers: {
-        Authorization: `Token ${Config.LL_TOKEN}`,
-        'User-Agent': 'Is There A Launch Today?',
+    const response = await axios.get(
+      `${LL_URL}/2.1.0/launch/upcoming?hide_recent_previous=true`,
+      {
+        timeout: 5000,
+        headers: {
+          Authorization: `Token ${Config.LL_TOKEN}`,
+          'User-Agent': 'Is There A Launch Today?',
+        },
       },
-    });
+    );
     return response.data.results;
   } catch (e) {
     if (e.response) {
@@ -41,15 +44,6 @@ const isToday = (date) => {
   );
 };
 
-const isTomorrow = (date) => {
-  const launchWindow = new Date(date);
-  return (
-    launchWindow.getDate() === today.getDate() + 1 &&
-    launchWindow.getMonth() === today.getMonth() &&
-    launchWindow.getFullYear() === today.getFullYear()
-  );
-};
-
 export const launchesToday = async () => {
   const launches = await getUpcomingLaunches();
   return launches.filter((launch) => {
@@ -57,9 +51,23 @@ export const launchesToday = async () => {
   });
 };
 
-export const launchesTomorrow = async () => {
-  const launches = await getUpcomingLaunches();
-  return launches.filter((launch) => {
-    return isTomorrow(launch.window_start) === true;
-  });
+export const launches = async () => {
+  return getUpcomingLaunches();
+};
+
+export const getRemainingTime = (time) => {
+  const difference = +new Date(time) - +new Date();
+
+  let timeLeft = {};
+
+  if (difference > 0) {
+    timeLeft = {
+      days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+      hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+      minutes: Math.floor((difference / 1000 / 60) % 60),
+      seconds: Math.floor((difference / 1000) % 60),
+    };
+  }
+
+  return timeLeft;
 };

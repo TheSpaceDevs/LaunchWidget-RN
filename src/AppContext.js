@@ -7,7 +7,7 @@ export const StateContext = createContext();
 
 const AppContext = ({ children }) => {
   const [launchesToday, setLaunchesToday] = useState(null);
-  const [launchesTomorrow, setLaunchesTomorrow] = useState(null);
+  const [launches, setLaunches] = useState(null);
   const [darkMode, setDarkMode] = useState(false);
   const [theme, setTheme] = useState(lightTheme);
 
@@ -31,8 +31,8 @@ const AppContext = ({ children }) => {
     launchesToday,
     setLaunchesToday,
 
-    launchesTomorrow,
-    setLaunchesTomorrow,
+    launches,
+    setLaunches,
 
     // Dark Mode
     darkMode,
