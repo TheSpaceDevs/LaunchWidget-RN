@@ -2,9 +2,7 @@
 #import "SentryDsn.h"
 #import "SentryError.h"
 #import "SentryLog.h"
-#import "SentryMeta.h"
 #import "SentrySDK.h"
-#import "SentrySdkInfo.h"
 
 @implementation SentryOptions
 
@@ -28,8 +26,6 @@
         self.enableAutoSessionTracking = YES;
         self.sessionTrackingIntervalMillis = [@30000 unsignedIntValue];
         self.attachStacktrace = YES;
-        _sdkInfo = [[SentrySdkInfo alloc] initWithName:SentryMeta.sdkName
-                                            andVersion:SentryMeta.versionString];
 
         // Set default release name
         NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
@@ -126,10 +122,6 @@
 
     if (nil != options[@"beforeBreadcrumb"]) {
         self.beforeBreadcrumb = options[@"beforeBreadcrumb"];
-    }
-
-    if (nil != options[@"onCrashedLastRun"]) {
-        self.onCrashedLastRun = options[@"onCrashedLastRun"];
     }
 
     if (nil != options[@"integrations"]) {

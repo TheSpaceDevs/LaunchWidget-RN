@@ -17,7 +17,6 @@
 #import "SentryMessage.h"
 #import "SentryMeta.h"
 #import "SentryOptions.h"
-#import "SentrySDK+Private.h"
 #import "SentryScope.h"
 #import "SentryStacktraceBuilder.h"
 #import "SentryThreadInspector.h"
@@ -176,19 +175,13 @@ NSString *const DropSessionLogMessage = @"Session has no release name. Won't sen
     return event;
 }
 
-- (SentryId *)captureCrashEvent:(SentryEvent *)event withScope:(SentryScope *)scope
-{
-    return [self sendEvent:event withScope:scope alwaysAttachStacktrace:NO isCrashEvent:YES];
-}
-
-- (SentryId *)captureCrashEvent:(SentryEvent *)event
-                    withSession:(SentrySession *)session
-                      withScope:(SentryScope *)scope
+- (SentryId *)captureEvent:(SentryEvent *)event
+               withSession:(SentrySession *)session
+                 withScope:(SentryScope *)scope
 {
     SentryEvent *preparedEvent = [self prepareEvent:event
                                           withScope:scope
-                             alwaysAttachStacktrace:NO
-                                       isCrashEvent:YES];
+                             alwaysAttachStacktrace:NO];
     return [self sendEvent:preparedEvent withSession:session];
 }
 
@@ -206,21 +199,9 @@ NSString *const DropSessionLogMessage = @"Session has no release name. Won't sen
                  withScope:(SentryScope *)scope
     alwaysAttachStacktrace:(BOOL)alwaysAttachStacktrace
 {
-    return [self sendEvent:event
-                     withScope:scope
-        alwaysAttachStacktrace:alwaysAttachStacktrace
-                  isCrashEvent:NO];
-}
-
-- (SentryId *)sendEvent:(SentryEvent *)event
-                 withScope:(SentryScope *)scope
-    alwaysAttachStacktrace:(BOOL)alwaysAttachStacktrace
-              isCrashEvent:(BOOL)isCrashEvent
-{
     SentryEvent *preparedEvent = [self prepareEvent:event
                                           withScope:scope
-                             alwaysAttachStacktrace:alwaysAttachStacktrace
-                                       isCrashEvent:isCrashEvent];
+                             alwaysAttachStacktrace:alwaysAttachStacktrace];
 
     if (nil != preparedEvent) {
         [self.transport sendEvent:preparedEvent];
@@ -309,17 +290,6 @@ NSString *const DropSessionLogMessage = @"Session has no release name. Won't sen
                              withScope:(SentryScope *)scope
                 alwaysAttachStacktrace:(BOOL)alwaysAttachStacktrace
 {
-    return [self prepareEvent:event
-                     withScope:scope
-        alwaysAttachStacktrace:alwaysAttachStacktrace
-                  isCrashEvent:NO];
-}
-
-- (SentryEvent *_Nullable)prepareEvent:(SentryEvent *)event
-                             withScope:(SentryScope *)scope
-                alwaysAttachStacktrace:(BOOL)alwaysAttachStacktrace
-                          isCrashEvent:(BOOL)isCrashEvent
-{
     NSParameterAssert(event);
     if ([self isDisabled]) {
         [self logDisabledMessage];
@@ -370,12 +340,12 @@ NSString *const DropSessionLogMessage = @"Session has no release name. Won't sen
         || (nil != event.exceptions && [event.exceptions count] > 0);
 
     BOOL debugMetaNotAttached = !(nil != event.debugMeta && event.debugMeta.count > 0);
-    if (!isCrashEvent && shouldAttachStacktrace && debugMetaNotAttached) {
+    if (shouldAttachStacktrace && debugMetaNotAttached) {
         event.debugMeta = [self.debugMetaBuilder buildDebugMeta];
     }
 
     BOOL threadsNotAttached = !(nil != event.threads && event.threads.count > 0);
-    if (!isCrashEvent && shouldAttachStacktrace && threadsNotAttached) {
+    if (shouldAttachStacktrace && threadsNotAttached) {
         event.threads = [self.threadInspector getCurrentThreads];
     }
 
@@ -394,13 +364,6 @@ NSString *const DropSessionLogMessage = @"Session has no release name. Won't sen
 
     if (nil != self.options.beforeSend) {
         event = self.options.beforeSend(event);
-    }
-
-    if (isCrashEvent && nil != self.options.onCrashedLastRun && !SentrySDK.crashedLastRunCalled) {
-        // We only want to call the callback once. It can occur that multiple crash events are
-        // about to be sent.
-        self.options.onCrashedLastRun(event);
-        SentrySDK.crashedLastRunCalled = YES;
     }
 
     return event;

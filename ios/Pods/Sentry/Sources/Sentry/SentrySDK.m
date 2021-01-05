@@ -23,7 +23,6 @@ NS_ASSUME_NONNULL_BEGIN
 @implementation SentrySDK
 
 static SentryHub *currentHub;
-static BOOL crashedLastRunCalled;
 
 @dynamic logLevel;
 
@@ -42,16 +41,6 @@ static BOOL crashedLastRunCalled;
     @synchronized(self) {
         currentHub = hub;
     }
-}
-
-+ (BOOL)crashedLastRunCalled
-{
-    return crashedLastRunCalled;
-}
-
-+ (void)setCrashedLastRunCalled:(BOOL)value
-{
-    crashedLastRunCalled = value;
 }
 
 + (void)startWithOptions:(NSDictionary<NSString *, id> *)optionsDict

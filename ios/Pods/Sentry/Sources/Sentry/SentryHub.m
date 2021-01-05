@@ -13,7 +13,7 @@ SentryHub ()
 
 @property (nonatomic, strong) SentryClient *_Nullable client;
 @property (nonatomic, strong) SentryScope *_Nullable scope;
-@property (nonatomic, strong) SentryCrashAdapter *crashAdapter;
+@property (nonatomic, strong) SentryCrashAdapter *sentryCrashWrapper;
 
 @end
 
@@ -31,7 +31,7 @@ SentryHub ()
         self.scope = scope;
         _sessionLock = [[NSObject alloc] init];
         _installedIntegrations = [[NSMutableArray alloc] init];
-        self.crashAdapter = [[SentryCrashAdapter alloc] init];
+        self.sentryCrashWrapper = [[SentryCrashAdapter alloc] init];
     }
     return self;
 }
@@ -39,10 +39,10 @@ SentryHub ()
 /** Internal constructor for testing */
 - (instancetype)initWithClient:(SentryClient *_Nullable)client
                       andScope:(SentryScope *_Nullable)scope
-               andCrashAdapter:(SentryCrashAdapter *)crashAdapter
+         andSentryCrashWrapper:(SentryCrashAdapter *)sentryCrashWrapper
 {
     self = [self initWithClient:client andScope:scope];
-    self.crashAdapter = crashAdapter;
+    self.sentryCrashWrapper = sentryCrashWrapper;
 
     return self;
 }
@@ -128,7 +128,7 @@ SentryHub ()
 
     // The crashed session is handled in SentryCrashIntegration. Checkout the comments there to find
     // out more.
-    if (!self.crashAdapter.crashedLastLaunch) {
+    if (!self.sentryCrashWrapper.crashedLastLaunch) {
         if (nil == timestamp) {
             [SentryLog
                 logWithMessage:[NSString stringWithFormat:@"No timestamp to close session "
@@ -203,13 +203,13 @@ SentryHub ()
         // It can be that there is no session yet, because autoSessionTracking was just enabled and
         // there is a previous crash on disk. In this case we just send the crash event.
         if (nil != crashedSession) {
-            [client captureCrashEvent:event withSession:crashedSession withScope:self.scope];
+            [client captureEvent:event withSession:crashedSession withScope:self.scope];
             [fileManager deleteCrashedSession];
             return;
         }
     }
 
-    [client captureCrashEvent:event withScope:self.scope];
+    [self captureEvent:event withScope:self.scope];
 }
 
 - (SentryId *)captureEvent:(SentryEvent *)event
